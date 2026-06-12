@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sanierung Bonn – Übersicht Juni 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;background:#f5f4f0;color:#1a1a18;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:1.5rem 1rem 3rem}
+h1{font-size:18px;font-weight:600;margin-bottom:.2rem}
+.sub{font-size:13px;color:#73726c;margin-bottom:1.5rem}
+.stitle{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:#a09e98;margin-bottom:.6rem}
+.tabs{display:flex;gap:4px;margin-bottom:1.25rem;flex-wrap:wrap}
+.tab{padding:6px 16px;font-size:13px;border:.5px solid #c5c3b9;border-radius:7px;cursor:pointer;background:transparent;color:#73726c;font-family:inherit}
+.tab.on{background:#fff;color:#1a1a18;font-weight:500;border-color:#888}
+.tab:hover:not(.on){background:#f1efea}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
+.kpi{background:#ebe9e3;border-radius:8px;padding:.7rem .875rem}
+.kpi-label{font-size:11px;color:#73726c;margin-bottom:3px}
+.kpi-value{font-size:18px;font-weight:500}
+.kpi-sub{font-size:10px;color:#a09e98;margin-top:2px}
+.highlight{background:#EAF3DE;border:.5px solid #97C459;border-radius:8px;padding:.65rem 1rem;font-size:12px;color:#27500A;margin-bottom:.75rem}
+.warn-box{background:#FAEEDA;border:.5px solid #EF9F27;border-radius:8px;padding:.65rem 1rem;font-size:12px;color:#6B3E00;margin-bottom:.75rem}
+.next-list{display:flex;flex-direction:column;gap:5px;margin-bottom:1.25rem}
+.ni{padding:7px 12px;background:#fff;border:.5px solid #d3d1c7;border-radius:8px}
+.ni.urg{border-left:3px solid #E24B4A;border-radius:0 8px 8px 0}
+.ni.warn{border-left:3px solid #BA7517;border-radius:0 8px 8px 0}
+.ni.info{border-left:3px solid #185FA5;border-radius:0 8px 8px 0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1rem}
+.rcard{background:#fff;border:.5px solid #d3d1c7;border-radius:10px;padding:.75rem 1rem}
+.rtitle{font-size:12px;font-weight:500;margin-bottom:.5rem}
+.rrow{display:flex;align-items:baseline;padding:3px 0;border-bottom:.5px solid #ebe9e3;font-size:11px;gap:6px}
+.rrow:last-child{border-bottom:none}
+.rrow .wk{color:#a09e98;white-space:nowrap;flex-shrink:0;min-width:72px}
+.rrow .rm{flex:1;color:#1a1a18}
+.rrow .who{color:#73726c;font-size:10px;font-style:italic;text-align:right;white-space:nowrap}
+.rrow .note{color:#3B6D11;font-size:10px;font-weight:500}
+.gantt-wrap{overflow-x:auto}
+.gt{width:100%;border-collapse:collapse;font-size:11px;min-width:760px}
+.gt th{font-weight:400;color:#73726c;padding:3px 1px;border-bottom:.5px solid #d3d1c7;font-size:10px;text-align:center;white-space:nowrap}
+.gt th.wh{text-align:left;padding-left:6px;width:85px;min-width:85px;font-size:10px;color:#a09e98}
+.gt th.lh{text-align:left;padding-left:6px;min-width:170px;font-size:11px}
+.gt td{border-bottom:.5px solid #ebe9e3}
+.gt td.wc{padding:3px 6px;font-size:10px;color:#a09e98;vertical-align:middle;white-space:nowrap;width:85px}
+.gt td.lc{padding:3px 6px;font-size:11px;vertical-align:middle;white-space:nowrap}
+.ph-sep td{background:#f5f4f0!important;padding:4px 6px;font-size:11px;font-weight:500;border-bottom:.5px solid #d3d1c7}
+.bwrap{position:relative;height:24px}
+.btoday{position:absolute;top:0;bottom:0;left:0;width:1.5px;background:#E24B4A;z-index:3}
+.bpause{position:absolute;top:0;bottom:0;background:rgba(83,74,183,.08);pointer-events:none}
+.gbar{position:absolute;height:14px;top:5px;border-radius:3px;padding:0 4px;font-size:9px;color:#fff;font-weight:500;overflow:hidden;white-space:nowrap;display:flex;align-items:center}
+.leg{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.li{display:flex;align-items:center;gap:4px;font-size:11px;color:#73726c}
+.ld{width:11px;height:7px;border-radius:2px}
+.pc{margin-bottom:.75rem;border:.5px solid #d3d1c7;border-radius:10px;overflow:hidden;background:#fff}
+.phr{display:flex;align-items:center;gap:8px;padding:.6rem 1rem;cursor:pointer;background:#f9f8f5}
+.phr:hover{background:#f1efea}
+.trow{padding:.45rem 1rem;border-top:.5px solid #ebe9e3;display:grid;grid-template-columns:8px 1fr auto auto;gap:8px;align-items:start}
+.bdg{font-size:10px;font-weight:500;padding:2px 7px;border-radius:6px;white-space:nowrap}
+.frt{width:100%;border-collapse:collapse;font-size:12px}
+.frt th{font-weight:500;font-size:11px;color:#73726c;padding:5px 8px;border-bottom:.5px solid #d3d1c7;text-align:left;white-space:nowrap}
+.frt td{padding:6px 8px;border-bottom:.5px solid #ebe9e3;vertical-align:top}
+.spill{font-size:11px;font-weight:500;padding:2px 10px;border-radius:99px;white-space:nowrap}
+.open-q{background:#EEEDFE;border:.5px solid #AFA9EC;border-radius:8px;padding:.75rem 1rem;font-size:12px;color:#3C3489;margin-top:1rem}
+.open-q ul{margin-top:.4rem;padding-left:1.25rem}
+.open-q li{margin-top:.3rem}
+@media(max-width:650px){.kpi-grid{grid-template-columns:1fr 1fr}.two-col,.three-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Sanierung Bonn Bad Godesberg</h1>
+<p class="sub">Doppelhaushälfte 1907 · 290 qm · Deadline Ende 2027 · Stand Juni 2026</p>
+<div class="tabs" id="tabs"></div>
+<div id="content"></div>
+</div>
+<script>
+var MO=["Jun'26","Jul","Aug","Sep","Okt","Nov","Dez","Jan'27","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez'27"];
+var NM=MO.length,CW=27;
+var TS={firma:{bg:'#E6F1FB',c:'#185FA5',l:'Fachfirma'},eigen:{bg:'#EAF3DE',c:'#3B6D11',l:'Eigenleistung'},m:{bg:'#FAEEDA',c:'#854F0B',l:'Gemischt'}};
+var SS={'s-done':{bg:'#EAF3DE',c:'#3B6D11'},'s-now':{bg:'#FCEBEB',c:'#A32D2D'},'s-soon':{bg:'#FAEEDA',c:'#854F0B'},'s-plan':{bg:'#E6F1FB',c:'#185FA5'},'s-wait':{bg:'#EEEDFE',c:'#534AB7'}};
+var PC={hoch:'#E24B4A',mittel:'#EF9F27',niedrig:'#639922'};
+var GC={'#E24B4A':'Sofort/läuft','#378ADD':'Fachfirma','#639922':'Eigenleistung','#EF9F27':'Gemischt','#D3D1C7':'Warten','#534AB7':'Mallorca-Pause'};
+
+var gantt=[
+{l:"── Sofort / Jun 2026",ip:true,c:'#E24B4A'},
+{l:'Fenster: Aufmaßtermin',w:'Jun W1–2',s:0,n:1,c:'#E24B4A'},
+{l:'Dachdecker: Angebote',w:'Jun W1–2',s:0,n:1,c:'#E24B4A'},
+{l:'Wärmepumpe + Heizkörper einbauen',w:'Jun W3–Jul W1',s:0.5,n:0.75,c:'#E24B4A'},
+{l:'Heizkörpernischen zumauern',w:'Jun W4',s:0.75,n:0.25,c:'#639922'},
+{l:'Kellerdecke dämmen',w:'Jul W2–3',s:1.25,n:0.5,c:'#378ADD'},
+{l:'Küchenentwurf fertigstellen',w:'Jun W1–Jul W2',s:0,n:1.5,c:'#639922'},
+{l:'Denkmalantrag Küche',w:'Jul W3–4',s:1.5,n:0.5,c:'#639922'},
+{l:'Denkmalamt Wartezeit',w:'Aug–Okt',s:2,n:3,c:'#D3D1C7'},
+{l:"── Ablauf: Schleifen → Elektriker → Putz",ip:true,c:'#639922'},
+{l:'Thores Zimmer schleifen (1.OG groß) ▶',w:'Jun W1–2',s:0,n:0.5,c:'#E24B4A'},
+{l:'Leanders Zimmer schleifen (1.OG klein)',w:'Jul W3–4',s:1.5,n:0.5,c:'#639922'},
+{l:'Sörens Zimmer schleifen (1.OG groß)',w:'Aug W1–2',s:2,n:0.5,c:'#639922'},
+{l:'E-T1: Treppenhaus + 1.OG freigeben',w:'Aug W3',s:2.5,n:0.25,c:'#378ADD'},
+{l:'Kelleraufgang dämmen',w:'Aug W3–4',s:2.5,n:0.5,c:'#639922'},
+{l:'Eingef. Kalkputz: Treppenhaus + 1.OG',w:'Aug W4–Sep W2',s:2.75,n:0.75,c:'#378ADD'},
+{l:'Ankas Zimmer schleifen (EG groß)',w:'Sep W3–4',s:3.5,n:0.5,c:'#639922'},
+{l:'Elektrik + Wasser Küche (parallel)',w:'Sep W3–Okt W3',s:3.5,n:1,c:'#378ADD'},
+{l:'Max Zimmer schleifen (EG klein)',w:'Okt W1–2',s:4,n:0.5,c:'#639922'},
+{l:'Neue Küche schleifen (EG, Wohnzimmer)',w:'Okt W3–4',s:4.5,n:0.5,c:'#639922'},
+{l:'Wanddurchbruch',w:'Nov W1',s:5,n:0.25,c:'#378ADD'},
+{l:'E-T2: EG freigeben',w:'Nov W2',s:5.25,n:0.25,c:'#378ADD'},
+{l:'Eingef. Kalkputz: EG',w:'Nov W3–Dez W2',s:5.5,n:0.75,c:'#378ADD'},
+{l:'Metallgeländer außen (Anka/Fachfirma)',w:'Jun–Sep 26',s:1,n:3,c:'#EF9F27'},
+{l:"── Küche + Böden",ip:true,c:'#0F6E56'},
+{l:'Boden neue Küche schleifen + ölen',w:'Dez W3–4',s:6.5,n:0.5,c:'#639922'},
+{l:'Küche einbauen',w:'Jan W1–4',s:7,n:1,c:'#639922'},
+{l:'Alte Küche abbauen',w:'Feb W1–2',s:8,n:0.5,c:'#639922'},
+{l:"── Mallorca-Pause",ip:true,c:'#534AB7'},
+{l:'Max: 2.OG Tapeten + Schleifen',w:'Feb W3–Mai W2 27',s:8.5,n:3,c:'#534AB7'},
+{l:'HWR: Boden + Wände (Fachfirma)',w:'Feb W3–Mai W2 27',s:8.5,n:3,c:'#378ADD'},
+{l:"── Phase 4 – nach Rückkehr",ip:true,c:'#185FA5'},
+{l:'HWR: Einrichtung einbauen',w:'Mai W3–Jun W1 27',s:11.5,n:0.75,c:'#639922'},
+{l:'Bäder sanieren – Fachfirma',w:'Mai W3–Aug W2 27',s:11.5,n:3,c:'#378ADD'},
+{l:'Restl. T+S 2.OG (Leander)',w:'Jun W1–Aug W1 27',s:12.25,n:2,c:'#639922'},
+{l:'Böden EG+1.OG – Fachfirma',w:'Aug W1–Sep W1 27',s:14,n:1,c:'#378ADD'},
+{l:'E-T3 + Eingef. Kalkputz: 2.OG',w:'Aug W1–Sep W1 27',s:14,n:1,c:'#378ADD'},
+{l:'Garten herrichten (optional)',w:'Aug W1–Sep W1 27',s:14,n:1,c:'#639922'},
+{l:'Böden 2.OG + Treppen – Eigenleistung',w:'Sep W1–Nov W1 27',s:15,n:2,c:'#639922'},
+{l:'Heizungsrohre: Holzverkleidung + Dämmung',w:'Nov W1–Dez W1 27',s:17,n:1,c:'#639922'},
+{l:'Rollladenkästen dämmen (optional)',w:'Dez W1–Dez W4 27',s:18,n:1,c:'#639922'},
+{l:"── Phase 5 – Außen + Abschluss",ip:true,c:'#993C1D'},
+{l:'Außentreppe vor Haustür – Fachfirma',w:'Nov W3–Dez W2 26',s:5.5,n:1,c:'#378ADD'},
+{l:'Terrasse: Mauer + Belag – Fachfirma',w:'Mai W3–Aug W2 27',s:11.5,n:3,c:'#378ADD'},
+{l:'Balkon: Wandputz + Anstrich',w:'Aug W1–Sep W4 27',s:14,n:2,c:'#378ADD'},
+{l:'Statiker + Fassade + Anstrich',w:'Sep W1–Dez W1 27',s:15,n:4,c:'#378ADD'},
+{l:'Marmorboden Flur EG aufarbeiten (optional)',w:'Okt W1–Nov W1 27',s:16,n:1,c:'#378ADD'},
+{l:'Energieausweis + Vermarktung',w:'Nov W3–Dez W4 27',s:17.5,n:1.5,c:'#378ADD'},
+];
+
+var phases=[
+{title:'Sofort – diese Woche',time:'Jun 2026',color:'#E24B4A',tasks:[
+{n:'Elektriker: Rahmenvereinbarung abschließen',sub:'T1 vormerken: nach Jul W3 (Sörens Zimmer fertig)',tag:'firma',p:'hoch',b:'in Pauschale',dep:''},
+{n:'Fenster-Aufmaßtermin vereinbaren',sub:'BAFA-Antrag läuft – 12–16 Wo. Lieferzeit, jeder Tag zählt',tag:'firma',p:'hoch',b:'–',dep:''},
+{n:'Dachdecker: Angebote anfragen',sub:'Nr. 09+10 – Bleieindichtung schadhaft, Sommerregen = Folgeschäden',tag:'firma',p:'hoch',b:'2.000–5.000 €',dep:''},
+{n:'Küchenentwurf fertigstellen',sub:'Flaschenhals Nr. 1 – Grundlage für Denkmalantrag, Sanitär, Elektriker',tag:'eigen',p:'hoch',b:'–',dep:'Eilt!'},
+{n:'Sanitär + Elektriker für Küche anfragen',sub:'Anschlusspos. müssen vor Denkmalantrag feststehen',tag:'firma',p:'hoch',b:'–',dep:'Nach Entwurf'},
+]},
+{title:'Phase 1 – Energetik',time:'Jun–Sep 2026',color:'#EF9F27',tasks:[
+{n:'Wärmepumpe + 5 Heizkörper einbauen',sub:'IDM, Jun W3–Jul W1 – Termin bestätigt',tag:'firma',p:'hoch',b:'60.000 €',dep:''},
+{n:'Heizkörpernischen zumauern',sub:'Jun W4 – vor Aufhängen der neuen Heizkörper, Eigenleistung',tag:'eigen',p:'hoch',b:'–',dep:'Jun W4'},
+{n:'Kellerdecke dämmen',sub:'Jul W2–3 – Termin bestätigt',tag:'firma',p:'hoch',b:'13.000 €',dep:''},
+{n:'Fenster (Aufmaß → Einbau)',sub:'Ziel: fertig vor November',tag:'firma',p:'hoch',b:'80.000 €',dep:'Aufmaß Jun'},
+{n:'Dachdecker: Angebote anfragen + beauftragen',sub:'Nr. 09+10 – Bleieindichtung schadhaft, Sommerregen = Folgeschäden',tag:'firma',p:'hoch',b:'2.000–5.000 €',dep:''},
+{n:'Kelleraufgang dämmen',sub:'Eigenleistung – parallel zu Kalkputz 1.OG, Jul W3–4',tag:'eigen',p:'mittel',b:'500–1.500 €',dep:'Nach E-T1'},
+{n:'Bodeneinlauf Kellerausgang reinigen (Nr. 04)',sub:'Feuchte + Treppenschäden – Einlauf frei machen',tag:'m',p:'mittel',b:'500–2.000 €',dep:''},
+]},
+{title:'Tapeten + Schleifen – Rotationssystem EG+1.OG',time:'Jun–Okt 2026',color:'#639922',tasks:[
+{n:'Jun W1–2: Thores Zimmer (1.OG groß)',sub:'Freisteht – Startpunkt, läuft bereits',tag:'eigen',p:'hoch',b:'–',dep:'Läuft ▶'},
+{n:'Jul W3–4: Leanders Zimmer (1.OG klein)',sub:'Leander zieht in Thores Zimmer',tag:'eigen',p:'hoch',b:'–',dep:''},
+{n:'Aug W1–2: Sörens Zimmer (1.OG groß)',sub:'Sören zieht in Thores Zimmer → danach 1.OG fertig',tag:'eigen',p:'hoch',b:'–',dep:''},
+{n:'[Lücke Aug W3–Sep W2]: Putz 1.OG trocknet',sub:'~3 Wochen bis Anka einziehen kann',tag:'eigen',p:'hoch',b:'–',dep:'Elektriker T1 + Putzfirma'},
+{n:'Sep W3–4: Ankas Zimmer (EG groß)',sub:'Anka zieht ins frisch verputzte 1.OG',tag:'eigen',p:'hoch',b:'–',dep:''},
+{n:'Okt W1–2: Max Zimmer (EG klein)',sub:'Max zieht in Ankas Zimmer',tag:'eigen',p:'hoch',b:'–',dep:''},
+{n:'Okt W3–4: Neue Küche (EG, heutiges Wohnzimmer)',sub:'Möbel → Ankas Zimmer → EG fertig',tag:'eigen',p:'hoch',b:'–',dep:''},
+{n:'Metallgeländer außen: entrosten, grundieren, streichen',sub:'Anka macht es parallel zu T+S – wenn nicht, danach Fachfirma',tag:'m',p:'mittel',b:'500–1.500 €',dep:'Parallel zu T+S Jun–Sep'},
+]},
+{title:'Elektriker – 3 Termine',time:'Aug 2026 – Sommer 2027',color:'#378ADD',tasks:[
+{n:'Termin 1: Treppenhaus + 1.OG',sub:'Nach Aug W2 (Sörens Zimmer fertig) – Aug W3',tag:'firma',p:'hoch',b:'in Pauschale',dep:'1.OG freigelegt'},
+{n:'Eingefärbter Kalkputz: Treppenhaus + 1.OG (~3 Wo.)',sub:'Farbe direkt im Putz – kein Streichen nötig. Danach zieht Anka ins 1.OG',tag:'firma',p:'hoch',b:'in Gesamtpauschale',dep:'Nach E-T1'},
+{n:'Termin 2: EG',sub:'Nach Wanddurchbruch + Okt W4 – Nov W2',tag:'firma',p:'hoch',b:'in Pauschale',dep:'EG freigelegt + Durchbruch'},
+{n:'Eingefärbter Kalkputz: EG (~3 Wo.)',sub:'Selbe Farbe wie 1.OG – kein Streichen nötig',tag:'firma',p:'hoch',b:'in Gesamtpauschale',dep:'Nach E-T2'},
+{n:'Termin 3: 2.OG',sub:'Nach Rückkehr – sobald freigelegt (~Aug 2027)',tag:'firma',p:'mittel',b:'in Pauschale',dep:'2.OG frei'},
+{n:'Eingefärbter Kalkputz: 2.OG (~3 Wo.)',sub:'Selbe Farbe, selbe Firma – Farbkonsistenz über alle Etappen wichtig',tag:'firma',p:'hoch',b:'in Gesamtpauschale',dep:'Nach E-T3'},
+]},
+{title:'Küchenprojekt',time:'Jul 2026 – Feb 2027',color:'#0F6E56',tasks:[
+{n:'Denkmalantrag einreichen',sub:'Ziel: Juli → Genehmigung ~Sep/Okt',tag:'eigen',p:'hoch',b:'–',dep:'Nach Entwurf'},
+{n:'Elektrik Küche verlegen',sub:'Über Wände – parallel ab Sep W3 (Ankas Zimmer)',tag:'firma',p:'hoch',b:'in Pauschale',dep:'Ab Sep W3'},
+{n:'Wasserleitung durch Keller',sub:'Parallel ab Sep W3 – unabhängig vom Wandzustand',tag:'firma',p:'hoch',b:'in Sanitärpauschale',dep:'Ab Sep W3'},
+{n:'Wanddurchbruch + statische Sicherung',sub:'Nach Okt W4 (EG fertig) + Denkmalamt-Genehmigung',tag:'firma',p:'hoch',b:'3.000–6.000 €',dep:'EG frei + Genehmigung'},
+{n:'Elektriker T2 + Kalkputz EG',sub:'Nov – alle EG-Räume auf einmal',tag:'firma',p:'hoch',b:'in Pauschale',dep:'Nach Durchbruch'},
+{n:'Boden neue Küche schleifen + ölen',sub:'2 Wochen – nach Putz EG (Dez W3–4)',tag:'eigen',p:'hoch',b:'–',dep:'Putz EG fertig'},
+{n:'Küche einbauen (Eigenleistung)',sub:'Ziel: Jan W1–4 2027',tag:'eigen',p:'hoch',b:'10.000–20.000 €',dep:'Boden fertig'},
+{n:'Außentreppe vor Haustür – Fachfirma',sub:'Kunststein, Risse ertüchtigen – parallel zum Kücheneinbau Jan',tag:'firma',p:'mittel',b:'2.000–5.000 €',dep:'Parallel Kücheneinbau'},
+{n:'Alte Küche abbauen',sub:'Feb W1–2 – erst wenn neue Küche läuft, Max übernimmt',tag:'eigen',p:'mittel',b:'–',dep:'Neue Küche fertig'},
+]},
+{title:'Mallorca-Pause',time:'Feb W3–Mai W2 2027',color:'#534AB7',tasks:[
+{n:'Max: 2.OG Tapeten + Schleifen',sub:'Was möglich – 1–2 Tage/Woche',tag:'eigen',p:'hoch',b:'–',dep:''},
+{n:'HWR: Boden + Wände (Fachfirma)',sub:'Tapeten, Schleifen, Boden, Putz – komplett ausgelagert',tag:'firma',p:'mittel',b:'5.000–8.000 €',dep:'Alte Küche abgebaut'},
+{n:'Bäder-Konzept ausarbeiten',sub:'Alle 4 Nassräume planen',tag:'eigen',p:'mittel',b:'–',dep:''},
+{n:'Fassadenplanung: Angebote einholen',sub:'Für Phase 5',tag:'eigen',p:'mittel',b:'–',dep:''},
+]},
+{title:'Phase 4 – nach Rückkehr',time:'Mai W3–Dez 2027',color:'#185FA5',tasks:[
+{n:'HWR: Einrichtung einbauen',sub:'Eigenleistung – ~3 Wochen, erstes nach Rückkehr (Mai W3)',tag:'eigen',p:'hoch',b:'2.000–4.000 €',dep:'HWR Boden + Wände fertig'},
+{n:'Bäder sanieren – Fachfirma (ab Mai W3)',sub:'4 Bäder – ~3–4 Wo./Bad, fertig ~Aug 2027. Erst dann Böden EG+1.OG',tag:'firma',p:'hoch',b:'20.000–45.000 €',dep:'Konzept aus Mallorca'},
+{n:'Restliche T+S 2.OG (was Max nicht schaffte)',sub:'Parallel zu Bädern – kein Konflikt, andere Etage',tag:'eigen',p:'hoch',b:'–',dep:'Nach HWR Einrichtung'},
+{n:'Terrasse: Mauer + Belag – Fachfirma',sub:'Parallel zu Bädern – keine Überschneidung, Terrasse im Garten',tag:'firma',p:'mittel',b:'3.000–8.000 €',dep:'Ab Mai W3 2027'},
+{n:'Garten herrichten (optional)',sub:'Eigenleistung – parallel zu Böden EG+1.OG Fachfirma',tag:'eigen',p:'niedrig',b:'500–2.000 €',dep:'Parallel Böden EG+1.OG'},
+{n:'Böden EG+1.OG – Fachfirma (ab Aug)',sub:'Parkettschleifer nach Bädern – 6 Zimmer + Flur 1.OG, ~2–3 Wo.',tag:'firma',p:'hoch',b:'3.000–6.000 €',dep:'Nach Bädern fertig'},
+{n:'Elektriker T3: 2.OG',sub:'Sobald 2.OG freigelegt (~Aug 2027)',tag:'firma',p:'hoch',b:'in Pauschale',dep:'2.OG freigelegt'},
+{n:'Eingefärbter Kalkputz: 2.OG (~3 Wo.)',sub:'Selbe Farbe, selbe Firma',tag:'firma',p:'hoch',b:'in Gesamtpauschale',dep:'Nach E-T3'},
+{n:'Böden 2.OG + Treppen – Eigenleistung',sub:'~8 Wo. → fertig ~Nov 2027',tag:'eigen',p:'hoch',b:'1.000–3.000 €',dep:'Nach Putz 2.OG'},
+]},
+{title:'Phase 5 – Außen + Abschluss',time:'Jul–Dez 2027',color:'#993C1D',tasks:[
+{n:'Balkon: Wandputz ausbessern + Anstrich (Nr. 08)',sub:'Netzartige Rissstruktur im Wandputz – vor Fassadenarbeiten',tag:'m',p:'mittel',b:'500–2.000 €',dep:'Vor Fassade'},
+{n:'Terrasse: Mauer + Belag – Fachfirma',sub:'Parallel zu Bädern Apr–Jun – keine Überschneidung (Terrasse im Garten)',tag:'firma',p:'mittel',b:'3.000–8.000 €',dep:'Ab Apr 2027'},
+{n:'Statiker: Mauerwerksriss Nr. 12',sub:'Herbst 2027 – vor Fassadenarbeiten',tag:'firma',p:'mittel',b:'500–1.500 €',dep:''},
+{n:'Fassadenputz + Riss sanieren + Anstrich',sub:'Nach Statikerbefund, denkmalgerecht',tag:'firma',p:'mittel',b:'13.000–26.000 €',dep:'Nach Statiker'},
+{n:'Marmorboden Flur EG aufarbeiten (optional)',sub:'Fachfirma – zeitgleich zu Fassade möglich',tag:'firma',p:'niedrig',b:'1.000–4.000 €',dep:'Nach Balkon'},
+{n:'Heizungsrohre: Holzverkleidung + Dämmung',sub:'Eigenleistung – nach Böden 2.OG + Treppen fertig',tag:'eigen',p:'niedrig',b:'~2.000 €',dep:'Nach Böden 2.OG + Treppen fertig'},
+{n:'Rollladenkästen dämmen (optional)',sub:'Eigenleistung Ende 2027 – nach Heizungsrohre, für Verkauf nicht entscheidend',tag:'eigen',p:'niedrig',b:'~500 €',dep:'Nach Heizungsrohre'},
+{n:'Energieausweis aktualisieren',sub:'Pflicht nach WP + Dämmung',tag:'firma',p:'hoch',b:'300–600 €',dep:'Nach Maßnahmen'},
+{n:'Unterlagen + Vermarktung',sub:'Fotos, Exposé, Makler',tag:'eigen',p:'hoch',b:'500–2.000 €',dep:''},
+]},
+];
+
+var fremd=[
+{g:'Heizungsbauer (IDM)',l:'Wärmepumpe + 5 Heizkörper',t:'Jun W3–Jul W1 2026',s:'s-done',sl:'Termin bestätigt ✓',ns:'Heizkörpernischen Jun W4 zumauern'},
+{g:'Fensterfirma',l:'Aufmaß + Einbau',t:'Jun–Nov 2026',s:'s-now',sl:'Sofort!',ns:'Aufmaßtermin diese Woche'},
+{g:'Elektriker',l:'Rahmenvereinbarung + 3 Termine auf Abruf',t:'Jul 2026 – Jun 2027',s:'s-now',sl:'Sofort!',ns:'Rahmenvereinbarung + T1 nach Jul W3'},
+{g:'Sanitärfirma (Küche)',l:'Wasserleitung durch Keller + Anschlüsse',t:'Aug 2026',s:'s-now',sl:'Sofort anfragen',ns:'Anschlusspos. mit Entwurf festlegen'},
+{g:'Dachdecker',l:'Gauben, Bleieindichtung, Dachanschlüsse Nr. 09+10',t:'Jul–Sep 2026',s:'s-now',sl:'Angebote einholen',ns:'Diese Woche anfragen'},
+{g:'Dämmfirma',l:'Kellerdeckendämmung',t:'Jul W2–3 2026',s:'s-done',sl:'Termin bestätigt ✓',ns:'Jul W2 bereit sein'},
+{g:'Putzfirma',l:'Eingef. Kalkputz: 1.OG (Jul) → EG (Okt) → 2.OG (Jun 27)',t:'Jul 2026 – Herbst 2027',s:'s-soon',sl:'Bald anfragen',ns:'Pilotprojekt 1.OG + Farbmuster anfragen'},
+{g:'Elektriker Küche',l:'Leitungen in neue Küche',t:'Aug 2026',s:'s-soon',sl:'Koordinieren',ns:'Mit Küchenentwurf anfragen'},
+{g:'Firma Wanddurchbruch',l:'Durchbruch + Statik Küche',t:'Sep/Okt 2026',s:'s-wait',sl:'Warten',ns:'Nach Denkmalamt-Genehmigung'},
+{g:'Außentreppe vor Haustür',l:'Kunststein ertüchtigen, Risse sanieren',t:'Nov–Dez 2026',s:'s-plan',sl:'Planen',ns:'Parallel zu Kücheneinbau beauftragen'},
+{g:'Terrasse – Fachfirma',l:'Terrassenmauer + Belag',t:'Apr–Jun 2027',s:'s-plan',sl:'Planen',ns:'Parallel zu Bädern – Angebote einholen'},
+{g:'HWR Fachfirma',l:'Boden + Wände (T+S, Elektrik, Boden, Putz)',t:'Jan–Mär 2027',s:'s-plan',sl:'Planen',ns:'Beauftragen wenn alte Küche abgebaut'},
+{g:'Bäder – Fachfirma',l:'4 Nassräume komplett',t:'Apr–Jul 2027',s:'s-plan',sl:'Planen',ns:'Konzept aus Mallorca, dann Angebote'},
+{g:'Statiker',l:'Mauerwerksriss Nr. 12',t:'Herbst 2027',s:'s-plan',sl:'Planen',ns:'Vor Fassadenarbeiten – nicht dringend'},
+{g:'Malerbetrieb / Stuckateur',l:'Fassadenputz + Anstrich',t:'Okt–Nov 2027',s:'s-plan',sl:'Planen',ns:'Nach Statikerbefund'},
+{g:'Energieberater',l:'Energieausweis aktualisieren',t:'Nov–Dez 2027',s:'s-plan',sl:'Planen',ns:'Nach allen Maßnahmen'},
+];
+
+var tab='overview',oph={};
+function bdg(tag){var t=TS[tag]||TS.m;return '<span class="bdg" style="background:'+t.bg+';color:'+t.c+'">'+t.l+'</span>';}
+function togPh(pi){oph[pi]=!oph[pi];render();}
+function setTab(id){tab=id;render();}
+
+var vorbereiten=[
+// Bereits erledigt / sofort
+{g:'Wärmepumpe (IDM)',arbeit:'Jun W3–Jul W1 2026',anfragen:'erledigt',beauftragen:'erledigt',status:'done'},
+{g:'Kellerdecke dämmen',arbeit:'Jul W2–3 2026',anfragen:'erledigt',beauftragen:'erledigt',status:'done'},
+{g:'Fenster: Aufmaßtermin',arbeit:'Jun 2026',anfragen:'sofort!',beauftragen:'sofort!',status:'now'},
+{g:'Dachdecker (Nr. 09+10)',arbeit:'Jul–Sep 2026',anfragen:'sofort!',beauftragen:'Jun W2–3',status:'now'},
+{g:'Elektriker (Rahmenvereinbarung)',arbeit:'Jul W3 2026',anfragen:'sofort!',beauftragen:'sofort!',status:'now'},
+{g:'Sanitär Küche',arbeit:'Aug W2 2026',anfragen:'sofort!',beauftragen:'Jun W4–Jul W1',status:'now'},
+{g:'Elektriker Küche (Leitungen)',arbeit:'Aug W2 2026',anfragen:'sofort!',beauftragen:'Jun W4–Jul W1',status:'now'},
+// Phase 1 → Küche
+{g:'Putzfirma – Pilot 1.OG',arbeit:'Jul W4 2026',anfragen:'Jun W2',beauftragen:'Jun W4',status:'now'},
+{g:'Firma Wanddurchbruch',arbeit:'Okt W1 2026',anfragen:'Nach Denkmalamt-Genehmigung (~Sep)',beauftragen:'Sep W3–4',status:'wait'},
+{g:'Außentreppe vor Haustür',arbeit:'Nov W3 2026',anfragen:'Sep W3',beauftragen:'Okt W3',status:'plan'},
+// Mallorca-Pause
+{g:'HWR Fachfirma (Boden + Wände)',arbeit:'Jan W1 2027',anfragen:'Okt W1 2026',beauftragen:'Nov W1 2026',status:'plan'},
+{g:'Putzfirma – EG Kalkputz',arbeit:'Okt W3 2026',anfragen:'Jul W3',beauftragen:'Aug W3',status:'plan'},
+// Phase 4 nach Rückkehr
+{g:'Bäder – Fachfirma',arbeit:'Apr W1 2027',anfragen:'Nov W1 2026',beauftragen:'Dez W1 2026',status:'plan'},
+{g:'Terrasse – Fachfirma',arbeit:'Apr W1 2027',anfragen:'Nov W1 2026',beauftragen:'Dez W1 2026',status:'plan'},
+{g:'Böden EG+1.OG – Parkettschleifer',arbeit:'Jul W1 2027',anfragen:'Apr W1 2027',beauftragen:'Mai W1 2027',status:'plan'},
+{g:'Putzfirma – 2.OG Kalkputz',arbeit:'Jul W1 2027',anfragen:'Apr W1 2027',beauftragen:'Mai W1 2027',status:'plan'},
+{g:'Marmorboden Flur EG',arbeit:'Sep W1 2027',anfragen:'Jun W1 2027',beauftragen:'Jul W1 2027',status:'plan'},
+// Phase 5
+{g:'Statiker (Riss Nr. 12)',arbeit:'Aug W1 2027',anfragen:'Mai W1 2027',beauftragen:'Jun W1 2027',status:'plan'},
+{g:'Fassade + Anstrich',arbeit:'Aug W1 2027',anfragen:'Mai W1 2027',beauftragen:'Jun W1 2027',status:'plan'},
+{g:'Balkon: Wandputz + Anstrich',arbeit:'Jul W1 2027',anfragen:'Apr W1 2027',beauftragen:'Mai W1 2027',status:'plan'},
+{g:'Energieberater',arbeit:'Nov 2027',anfragen:'Aug 2027',beauftragen:'Sep 2027',status:'plan'},
+];
+
+function renderVorbereiten(){
+  var SS2={'done':{bg:'#EAF3DE',c:'#3B6D11',l:'Erledigt ✓'},'now':{bg:'#FCEBEB',c:'#A32D2D',l:'Jetzt!'},'wait':{bg:'#EEEDFE',c:'#534AB7',l:'Warten'},'plan':{bg:'#E6F1FB',c:'#185FA5',l:'Planen'}};
+  var h='<div style="font-size:12px;color:#73726c;margin-bottom:12px;padding:.6rem .875rem;background:#ebe9e3;border-radius:8px">';
+  h+='<strong style="color:#1a1a18">Faustregel:</strong> 2–3 Monate vorher anfragen · 6–8 Wochen vorher beauftragen · Bei allen Gewerken gilt: je früher desto besser.';
+  h+='</div>';
+  h+='<table class="frt"><thead><tr>';
+  h+='<th>Gewerk</th><th>Arbeit startet</th><th>Spätestens anfragen</th><th>Spätestens beauftragen</th><th>Status</th>';
+  h+='</tr></thead><tbody>';
+  vorbereiten.forEach(function(v){
+    var ss=SS2[v.status]||SS2['plan'];
+    h+='<tr>';
+    h+='<td><strong>'+v.g+'</strong></td>';
+    h+='<td style="font-size:12px;color:#73726c;white-space:nowrap">'+v.arbeit+'</td>';
+    h+='<td style="font-size:12px;font-weight:500;color:'+(v.anfragen==='sofort!'?'#A32D2D':v.anfragen.indexOf('erledigt')>=0?'#3B6D11':'#1a1a18')+'">'+v.anfragen+'</td>';
+    h+='<td style="font-size:12px;font-weight:500;color:'+(v.beauftragen==='sofort!'?'#A32D2D':v.beauftragen.indexOf('erledigt')>=0?'#3B6D11':'#1a1a18')+'">'+v.beauftragen+'</td>';
+    h+='<td><span class="spill" style="background:'+ss.bg+';color:'+ss.c+'">'+ss.l+'</span></td>';
+    h+='</tr>';
+  });
+  h+='</tbody></table>';
+  return h;
+}
+
+function renderOverview(){
+  var h='';
+  h+='<div class="kpi-grid">';
+  h+='<div class="kpi"><div class="kpi-label">Budget gesamt</div><div class="kpi-value" style="color:#185FA5">300.000 €</div><div class="kpi-sub">+ 50.000 € Puffer</div></div>';
+  h+='<div class="kpi"><div class="kpi-label">Energetisch (netto)</div><div class="kpi-value" style="color:#BA7517">~133.400 €</div><div class="kpi-sub">nach Förderung</div></div>';
+  h+='<div class="kpi"><div class="kpi-label">Kücheneinbau</div><div class="kpi-value" style="color:#0F6E56">Jan 27</div><div class="kpi-sub">Mallorca ab Feb W3 ✓</div></div>';
+  h+='<div class="kpi"><div class="kpi-label">Böden fertig</div><div class="kpi-value" style="color:#3B6D11">~Nov 2027</div><div class="kpi-sub">Deadline haltbar ✓</div></div>';
+  h+='</div>';
+
+  h+='<div class="highlight"><strong>Zeitplan:</strong> Leander startet Jul W3 · Putz 1.OG Sep W1–3 · Putz EG Nov W3–Dez W2 · Kücheneinbau Jan W1–4 · Küchenabbau Feb W1–2 (Max) · Mallorca ab Feb W3 ✓</div>';
+  h+='<div class="highlight"><strong>Deadline Dez 2027 haltbar ✓</strong> Rückkehr Mai W3 · Bäder + Terrasse ab Mai W3 · Böden EG+1.OG Fachfirma ab Aug · Böden 2.OG Eigenleistung Sep–Nov 2027.</div>';
+
+  h+='<div class="stitle" style="margin-top:1rem">Nächste Schritte</div><div class="next-list">';
+  [{cls:'urg',t:'Küchenentwurf fertigstellen',s:'Flaschenhals Nr. 1 – Denkmalantrag, Sanitär, Elektriker hängen alle daran'},
+   {cls:'urg',t:'Elektriker: Rahmenvereinbarung + T1 nach Aug W3 vormerken',s:'Nach Sörens Zimmer fertig – Treppenhaus + 1.OG freigeben'},
+   {cls:'urg',t:'Fenster-Aufmaßtermin diese Woche',s:'BAFA läuft – 12–16 Wochen Lieferzeit'},
+   {cls:'urg',t:'Dachdecker: Angebote anfragen',s:'Bleieindichtung schadhaft – Sommerregen = Folgeschäden'},
+   {cls:'warn',t:'Sanitär + Elektriker Küche anfragen',s:'Anschlusspos. müssen in den Denkmalantrag'},
+  ].forEach(function(it){
+    h+='<div class="ni '+it.cls+'"><div style="font-size:13px;font-weight:500">'+it.t+'</div><div style="font-size:11px;color:#73726c;margin-top:2px">'+it.s+'</div></div>';
+  });
+  h+='</div>';
+
+  h+='<div class="stitle" style="margin-top:1rem">Detaillierter Ablauf</div>';
+  h+='<div class="three-col">';
+
+  // Spalte 1: Rotationssystem
+  h+='<div class="rcard"><div class="rtitle" style="color:#0F6E56">Tapeten + Schleifen – Rotation</div>';
+  [
+    ['Jun W1–2','Thores Zimmer (1.OG)','freisteht ▶',''],
+    ['Jun W3–4','Leanders Zimmer (1.OG)','Leander → Thores Zi.',''],
+    ['Jul W1–2','Sörens Zimmer (1.OG)','Sören → Thores Zi.','→ 1.OG fertig'],
+    ['Aug W3','E-T1 + Putz 1.OG','~3 Wo. Trockenzeit',''],
+    ['Sep W3–4','Ankas Zimmer (EG)','Anka → 1.OG',''],
+    ['Okt W1–2','Max Zimmer (EG)','Max → Ankas Zi.',''],
+    ['Okt W3–4','Neue Küche (EG)','Möbel → Ankas Zi.','→ EG fertig'],
+    ['Nov W1','Wanddurchbruch','nach Denkmalamt',''],
+    ['Nov W2','E-T2 + Putz EG','~3 Wo.',''],
+    ['Dez W3–4','Boden Küche schleifen','Eigenleistung',''],
+    ['Jan W1–4','Küche einbauen','Eigenleistung','→ Jan 2027'],
+    ['Feb W1–2','Alte Küche abbauen','Max',''],
+    ['Feb W3','Mallorca-Start','Leander','→ Feb W3 ✓'],
+  ].forEach(function(r){
+    h+='<div class="rrow"><span class="wk">'+r[0]+'</span><span class="rm">'+r[1]+(r[3]?' <span class="note">'+r[3]+'</span>':'')+'</span><span class="who">'+r[2]+'</span></div>';
+  });
+  h+='</div>';
+
+  // Spalte 2: Mallorca + 2.OG
+  h+='<div class="rcard"><div class="rtitle" style="color:#534AB7">Mallorca + 2.OG</div>';
+  [
+    ['Feb W3–Mai W2 27','Max: 2.OG T+S','Max alleine',''],
+    ['Feb W3–Mai W2 27','HWR: Fachfirma','komplett ausgelagert','parallel'],
+    ['Mai W3 27','Rückkehr Leander','',''],
+    ['Mai W3–Jul W3 27','Rest T+S 2.OG','Leander',''],
+    ['Aug W1 27','E-T3 + Putz 2.OG','~3 Wo.',''],
+    ['Sep W1 27','2.OG fertig verputzt','','→ Böden start'],
+  ].forEach(function(r){
+    h+='<div class="rrow"><span class="wk">'+r[0]+'</span><span class="rm">'+r[1]+(r[3]&&r[3]!='parallel'?' <span class="note">'+r[3]+'</span>':'')+'</span><span class="who">'+(r[3]==='parallel'?'⚡ parallel':r[2])+'</span></div>';
+  });
+  h+='<div style="margin-top:8px;padding-top:8px;border-top:.5px solid #ebe9e3;font-size:11px;color:#73726c">Treppenhaus EG+1.OG Flur bereits erledigt ✓<br>2.OG dient als Ausweichquartier</div>';
+  h+='</div>';
+
+  // Spalte 3: Böden
+  h+='<div class="rcard"><div class="rtitle" style="color:#185FA5">Böden schleifen</div>';
+  [
+    ['Aug 2027','EG+1.OG: Fachfirma','~2–3 Wo., nach Bädern'],
+    ['Sep W1–Nov W1 27','2.OG + Treppen: Eigenleistung','~8 Wo. → Nov 2027'],
+    ['HWR','Fliesen: Fachfirma','Mallorca-Pause'],
+  ].forEach(function(r){
+    h+='<div class="rrow"><span class="wk">'+r[0]+'</span><span class="rm">'+r[1]+'</span><span class="who">'+r[2]+'</span></div>';
+  });
+  h+='<div style="margin-top:8px;padding-top:8px;border-top:.5px solid #ebe9e3;font-size:11px">';
+  h+='<div style="color:#3B6D11;font-weight:500">✓ Deadline Dez 2027 haltbar</div>';
+  h+='<div style="color:#73726c;margin-top:3px">Fachfirma EG+1.OG nach Bädern – Aug 2027</div>';
+  h+='</div></div>';
+  h+='</div>';
+
+  return h;
+}
+
+function renderGantt(){
+  var h='<div class="gantt-wrap"><table class="gt"><thead><tr><th class="wh">Zeitraum</th><th class="lh">Maßnahme</th>'+MO.map(function(m){return '<th>'+m+'</th>';}).join('')+'</tr></thead><tbody>';
+  gantt.forEach(function(it){
+    if(it.ip){h+='<tr class="ph-sep"><td colspan="'+(NM+2)+'" style="color:'+it.c+'">'+it.l+'</td></tr>';return;}
+    var L=(it.s/NM*100).toFixed(2),W=Math.max(it.n/NM*100,1.2).toFixed(2);
+    var pL=(8.5/NM*100).toFixed(2),pW=(3/NM*100).toFixed(2);
+    h+='<tr><td class="wc">'+(it.w||'')+'</td><td class="lc">'+it.l+'</td><td colspan="'+NM+'" style="padding:0"><div class="bwrap" style="min-width:'+(NM*CW)+'px"><div class="btoday"></div><div class="bpause" style="left:'+pL+'%;width:'+pW+'%"></div><div class="gbar" style="left:'+L+'%;width:'+W+'%;background:'+it.c+'">'+it.l+'</div></div></td></tr>';
+  });
+  h+='</tbody></table></div>';
+  h+='<div class="leg">'+Object.entries(GC).map(function(e){return '<span class="li"><span class="ld" style="background:'+e[0]+'"></span>'+e[1]+'</span>';}).join('');
+  h+='<span class="li"><span class="ld" style="background:rgba(83,74,183,.15);border:1px solid #534AB7"></span>Mallorca-Pause</span></div>';
+  return h;
+}
+
+function renderTasks(){
+  return phases.map(function(ph,pi){
+    var isO=oph[pi]!==false;
+    var h='<div class="pc"><div class="phr" onclick="togPh('+pi+')"><div style="width:9px;height:9px;border-radius:50%;background:'+ph.color+';flex-shrink:0"></div><div style="font-size:13px;font-weight:500;flex:1">'+ph.title+'</div><div style="font-size:11px;color:#73726c;margin-right:8px">'+ph.time+' · '+ph.tasks.length+' Aufg.</div><span style="color:#73726c">'+(isO?'▴':'▾')+'</span></div>';
+    if(isO){
+      ph.tasks.forEach(function(t){
+        h+='<div class="trow"><div style="width:7px;height:7px;border-radius:50%;margin-top:4px;flex-shrink:0;background:'+(PC[t.p]||'#999')+'"></div><div><div style="font-size:12px;line-height:1.4">'+t.n+'</div><div style="font-size:11px;color:#73726c;margin-top:1px">'+t.sub+'</div>'+(t.dep?'<div style="font-size:10px;color:#a09e98;margin-top:1px">→ '+t.dep+'</div>':'')+'</div>'+bdg(t.tag)+'<div style="font-size:11px;color:#73726c;white-space:nowrap;text-align:right;margin-top:2px">'+t.b+'</div></div>';
+      });
+    }
+    return h+'</div>';
+  }).join('');
+}
+
+function renderFremd(){
+  var h='<table class="frt"><thead><tr><th>Gewerk</th><th>Zeitfenster</th><th>Status</th><th>Nächster Schritt</th></tr></thead><tbody>';
+  fremd.forEach(function(f){
+    var ss=SS[f.s]||SS['s-plan'];
+    h+='<tr><td><strong>'+f.g+'</strong><div style="font-size:11px;color:#73726c;margin-top:1px">'+f.l+'</div></td><td style="font-size:11px;color:#73726c;white-space:nowrap">'+f.t+'</td><td><span class="spill" style="background:'+ss.bg+';color:'+ss.c+'">'+f.sl+'</span></td><td style="font-size:11px;color:#73726c">'+f.ns+'</td></tr>';
+  });
+  return h+'</tbody></table>';
+}
+
+function render(){
+  var TABS=[['overview','Übersicht'],['zt','Zeitplan'],['at','Alle Aufgaben'],['vb','Vorbereiten'],['fl','Fremdleistungen']];
+  document.getElementById('tabs').innerHTML=TABS.map(function(t){return '<button class="tab'+(tab===t[0]?' on':'')+'" onclick="setTab(\''+t[0]+'\')">'+t[1]+'</button>';}).join('');
+  var el=document.getElementById('content');
+  if(tab==='overview')el.innerHTML=renderOverview();
+  else if(tab==='zt')el.innerHTML=renderGantt();
+  else if(tab==='at')el.innerHTML=renderTasks();
+  else if(tab==='vb')el.innerHTML=renderVorbereiten();
+  else el.innerHTML=renderFremd();
+}
+render();
+</script>
+</body>
+</html>
