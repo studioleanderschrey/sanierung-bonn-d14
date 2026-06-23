@@ -401,14 +401,60 @@ function renderFremd(){
   return h+'</tbody></table>';
 }
 
+function renderDokumente(){
+  var h='';
+  // Drive link card
+  h+='<div style="background:#fff;border:.5px solid #d3d1c7;border-radius:12px;padding:1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1.25rem">';
+  h+='<div style="width:48px;height:48px;background:#1967D2;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">';
+  h+='<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M7.5 15L4 21h16l-3.5-6H7.5z" fill="white" opacity=".7"/><path d="M12 3L8 9.5h8L12 3z" fill="white"/><path d="M8 9.5L4 16h7.5L15.5 9.5H8z" fill="white" opacity=".5"/></svg>';
+  h+='</div>';
+  h+='<div style="flex:1">';
+  h+='<div style="font-size:15px;font-weight:600;color:#1a1a18;margin-bottom:3px">Google Drive – Projektordner</div>';
+  h+='<div style="font-size:12px;color:#73726c">Alle Belege, Rechnungen, Angebote und Projektdokumente</div>';
+  h+='</div>';
+  h+='<a href="https://drive.google.com/drive/folders/1HoEg07yVH1EeDkEQim8Hb8Rie9m0wVB3?usp=sharing" target="_blank" style="background:#1967D2;color:#fff;text-decoration:none;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:500;white-space:nowrap">Ordner öffnen →</a>';
+  h+='</div>';
+
+  // Categories
+  var cats = [
+    {icon:'🧾', title:'Rechnungen', desc:'Alle gestellten und erhaltenen Rechnungen chronologisch', examples:['RE202507-0012 · Jul 2025','RE202508-0016 · Aug 2025','RE202510-0019 · Okt 2025','RE202512-0020 · Dez 2025','RE202601-0022/0023 · Jan 2026','RE202602-0024 · Feb 2026','RE202604-0025 · Apr 2026']},
+    {icon:'📋', title:'Angebote', desc:'Angebote von Fachfirmen (Heizung, Fenster, Putz, etc.)', examples:['IDM Wärmepumpe','Fensterfirma','Kellerdecke Dämmung','Dachdecker']},
+    {icon:'📄', title:'Genehmigungen & Anträge', desc:'Behördliche Dokumente und Förderanträge', examples:['KfW-Zusageschreiben (10.500 €)','BAFA-Antrag Fenster + Kellerdecke','Denkmalamt-Genehmigung energetisch','Denkmalantrag Küche (laufend)']},
+    {icon:'🏗️', title:'Projektdokumentation', desc:'Prüfberichte, Pläne, Sachverständigenberichte', examples:['Prüfbericht Sachverständiger (21.03.2024)','Individueller Sanierungsfahrplan (iSFP)','Heizlastberechnung','Grundrisspläne']},
+    {icon:'📸', title:'Baudokumentation', desc:'Fotos des Baufortschritts', examples:['Vorher-Aufnahmen','Fortschrittsfotos Treppenhaus','Fortschrittsfotos Zimmer']},
+  ];
+
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">';
+  cats.forEach(function(cat){
+    h+='<div style="background:#fff;border:.5px solid #d3d1c7;border-radius:10px;padding:.875rem 1rem">';
+    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:.5rem">';
+    h+='<span style="font-size:18px">'+cat.icon+'</span>';
+    h+='<div style="font-size:13px;font-weight:500;color:#1a1a18">'+cat.title+'</div>';
+    h+='</div>';
+    h+='<div style="font-size:11px;color:#73726c;margin-bottom:.5rem">'+cat.desc+'</div>';
+    h+='<div style="border-top:.5px solid #ebe9e3;padding-top:.5rem">';
+    cat.examples.forEach(function(ex){
+      h+='<div style="font-size:10px;color:#a09e98;padding:2px 0">· '+ex+'</div>';
+    });
+    h+='</div></div>';
+  });
+  h+='</div>';
+
+  h+='<div style="margin-top:1rem;background:#ebe9e3;border-radius:8px;padding:.65rem 1rem;font-size:11px;color:#73726c">';
+  h+='<strong style="color:#1a1a18">Tipp:</strong> Neue Rechnungen und Angebote direkt in den Drive-Ordner hochladen – so hat dein Vater immer den aktuellen Stand.';
+  h+='</div>';
+  return h;
+}
+
 function render(){
-  var TABS=[['overview','Übersicht'],['zt','Zeitplan'],['at','Alle Aufgaben'],['vb','Vorbereiten'],['fl','Fremdleistungen']];
+  var TABS=[['overview','Übersicht'],['zt','Zeitplan'],['at','Alle Aufgaben'],['vb','Vorbereiten'],['fl','Fremdleistungen'],['dok','Dokumente']];
   document.getElementById('tabs').innerHTML=TABS.map(function(t){return '<button class="tab'+(tab===t[0]?' on':'')+'" onclick="setTab(\''+t[0]+'\')">'+t[1]+'</button>';}).join('');
   var el=document.getElementById('content');
   if(tab==='overview')el.innerHTML=renderOverview();
   else if(tab==='zt')el.innerHTML=renderGantt();
   else if(tab==='at')el.innerHTML=renderTasks();
   else if(tab==='vb')el.innerHTML=renderVorbereiten();
+  else if(tab==='dok')el.innerHTML=renderDokumente();
   else el.innerHTML=renderFremd();
 }
 render();
