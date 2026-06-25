@@ -85,14 +85,16 @@ var GC={'#E24B4A':'Sofort/läuft','#378ADD':'Fachfirma','#639922':'Eigenleistung
 
 var gantt=[
 {l:"── Sofort / Jun 2026",ip:true,c:'#E24B4A'},
-{l:'Fenster: Aufmaß erledigt ✓',w:'Jun W3',s:0,n:1,c:'#639922'},
 {l:'Dachdecker: Angebote',w:'Jun W1–2',s:0,n:1,c:'#E24B4A'},
-{l:'Wärmepumpe + Heizkörper einbauen',w:'Jun W3–Jul W1',s:0.5,n:0.75,c:'#E24B4A'},
-{l:'Heizkörpernischen zumauern',w:'Jun W4',s:0.75,n:0.25,c:'#639922'},
-{l:'Kellerdecke dämmen',w:'Jul W2–3',s:1.25,n:0.5,c:'#378ADD'},
 {l:'Küchenentwurf fertigstellen',w:'Jun W1–Jul W2',s:0,n:1.5,c:'#639922'},
 {l:'Denkmalantrag Küche',w:'Jul W3–4',s:1.5,n:0.5,c:'#639922'},
 {l:'Denkmalamt Wartezeit',w:'Aug–Okt',s:2,n:3,c:'#D3D1C7'},
+{l:"── Energetische Sanierung",ip:true,c:'#185FA5'},
+{l:'Wärmepumpe + Heizkörper einbauen',w:'Jun W3–Jul W1',s:0.5,n:0.75,c:'#378ADD'},
+{l:'Kellerdecke dämmen',w:'Jul W2–3',s:1.25,n:0.5,c:'#378ADD'},
+{l:'Fenster: Aufmaß erledigt ✓',w:'Jun W3',s:0,n:1,c:'#378ADD'},
+{l:'Fenster: Einbau',w:'Ende Sep–Okt 26',s:3.75,n:1,c:'#378ADD'},
+{l:'Fenster: Nachbearbeitung Malermeister',w:'Nov 26 oder Frühjahr 27',s:5,n:1,c:'#EF9F27'},
 {l:"── Ablauf: Schleifen → Elektriker → Putz",ip:true,c:'#639922'},
 {l:'Thores Zimmer schleifen (1.OG groß) ▶',w:'Jun W1–2',s:0,n:0.5,c:'#E24B4A'},
 {l:'Leanders Zimmer schleifen (1.OG klein)',w:'Jul W3–4',s:1.5,n:0.5,c:'#639922'},
@@ -146,7 +148,8 @@ var phases=[
 {n:'Wärmepumpe + 5 Heizkörper einbauen',sub:'IDM, Jun W3–Jul W1 – Termin bestätigt',tag:'firma',p:'hoch',b:'60.000 €',dep:''},
 {n:'Heizkörpernischen zumauern',sub:'Jun W4 – vor Aufhängen der neuen Heizkörper, Eigenleistung',tag:'eigen',p:'hoch',b:'–',dep:'Jun W4'},
 {n:'Kellerdecke dämmen',sub:'Jul W2–3 – Termin bestätigt',tag:'firma',p:'hoch',b:'13.000 €',dep:''},
-{n:'Fenster (Aufmaß → Einbau)',sub:'Ziel: fertig vor November',tag:'firma',p:'hoch',b:'80.000 €',dep:'Aufmaß Jun'},
+{n:'Fenster (Einbau)',sub:'Ende Sep–Okt 2026 – genauere Termine folgen noch',tag:'firma',p:'hoch',b:'80.000 €',dep:'Aufmaß erledigt ✓'},
+{n:'Fenster: Nachbearbeitung Malermeister',sub:'Option A: Nov 2026 direkt im Anschluss (empfohlen – Holzschutz vor Winter) · Option B: Frühjahr 2027. Malermeister bereits kontaktiert.',tag:'m',p:'mittel',b:'tbd',dep:'Nach Fenstereinbau'},
 {n:'Dachdecker: Angebote anfragen + beauftragen',sub:'Nr. 09+10 – Bleieindichtung schadhaft, Sommerregen = Folgeschäden',tag:'firma',p:'hoch',b:'2.000–5.000 €',dep:''},
 {n:'Kelleraufgang dämmen',sub:'Eigenleistung – parallel zu Kalkputz 1.OG, Jul W3–4',tag:'eigen',p:'mittel',b:'500–1.500 €',dep:'Nach E-T1'},
 {n:'Bodeneinlauf Kellerausgang reinigen (Nr. 04)',sub:'Feuchte + Treppenschäden – Einlauf frei machen',tag:'m',p:'mittel',b:'500–2.000 €',dep:''},
@@ -212,7 +215,8 @@ var phases=[
 
 var fremd=[
 {g:'Heizungsbauer (IDM)',l:'Wärmepumpe + 5 Heizkörper',t:'Jun W3–Jul W1 2026',s:'s-done',sl:'Termin bestätigt ✓',ns:'Heizkörpernischen Jun W4 zumauern'},
-{g:'Fensterfirma',l:'Aufmaß + Einbau',t:'Jun–Nov 2026',s:'s-done',sl:'Aufmaß erledigt ✓',ns:'Einbau folgt nach Lieferzeit ~12–16 Wo.'},
+{g:'Fensterfirma',l:'Einbau Ende Sep–Okt 2026 (~1 Monat)',t:'Sep–Okt 2026',s:'s-done',sl:'Aufmaß erledigt ✓',ns:'Genauere Termine folgen noch'},
+{g:'Malermeister (Fenster Nachbearbeitung)',l:'Lackierung der neuen Fenster',t:'Nov 2026 oder Frühjahr 2027',s:'s-soon',sl:'Kontaktiert ✓',ns:'Termin festlegen: Nov direkt nach Einbau (empfohlen) oder Frühjahr 2027'},
 {g:'Wimmer Service (Elektriker)',l:'E-T1 Aug W3 + Aufmaß Küche · E-T2 + E-T3 rollierend',t:'Aug 2026 – Aug 2027',s:'s-done',sl:'Termin bestätigt ✓',ns:'E-T1 Aug W3 – nächste Termine jeweils beim vorigen Termin vereinbaren'},
 {g:'Wimmer Service (Sanitär Küche)',l:'Wasserleitung durch Keller + Anschlüsse',t:'Sep W3 2026',s:'s-soon',sl:'Aufmaß bestätigt ✓',ns:'Auftrag nach Aufmaß Aug W3 erteilen'},
 {g:'Wimmer Service (Elektriker Küche)',l:'Leitungen in neue Küche verlegen',t:'Sep W3 2026',s:'s-soon',sl:'Aufmaß bestätigt ✓',ns:'Auftrag nach Aufmaß Aug W3 erteilen'},
@@ -235,31 +239,31 @@ function togPh(pi){oph[pi]=!oph[pi];render();}
 function setTab(id){tab=id;render();}
 
 var vorbereiten=[
-// Bereits erledigt / sofort
+// Bereits erledigt
 {g:'Wärmepumpe (IDM)',arbeit:'Jun W3–Jul W1 2026',anfragen:'erledigt',beauftragen:'erledigt',status:'done'},
 {g:'Kellerdecke dämmen',arbeit:'Jul W2–3 2026',anfragen:'erledigt',beauftragen:'erledigt',status:'done'},
-{g:'Fenster: Aufmaßtermin',arbeit:'Jun 2026',anfragen:'erledigt',beauftragen:'erledigt ✓',status:'done'},
-{g:'Dachdecker (Nr. 09+10)',arbeit:'Jul–Sep 2026',anfragen:'sofort!',beauftragen:'Jun W2–3',status:'now'},
+{g:'Fenster: Aufmaß + Einbau',arbeit:'Sep–Okt 2026',anfragen:'erledigt',beauftragen:'erledigt ✓',status:'done'},
 {g:'Wimmer Service (E-T1 + Aufmaß Küche)',arbeit:'Aug W3 2026',anfragen:'erledigt',beauftragen:'erledigt ✓',status:'done'},
-{g:'Sanitär Küche (Wimmer Service)',arbeit:'Sep W3 2026',anfragen:'erledigt ✓ (Aufmaß Aug W3)',beauftragen:'Nach Aufmaß Aug W3',status:'soon'},
-{g:'Elektriker Küche – Leitungen (Wimmer Service)',arbeit:'Sep W3 2026',anfragen:'erledigt ✓ (Aufmaß Aug W3)',beauftragen:'Nach Aufmaß Aug W3',status:'soon'},
-// Phase 1 → Küche
-{g:'Putzfirma – Pilot 1.OG',arbeit:'Jul W4 2026',anfragen:'Jun W2',beauftragen:'Jun W4',status:'now'},
-{g:'Firma Wanddurchbruch',arbeit:'Okt W1 2026',anfragen:'Nach Denkmalamt-Genehmigung (~Sep)',beauftragen:'Sep W3–4',status:'wait'},
+// Sofort / bald
+{g:'Dachdecker (Nr. 09+10)',arbeit:'Jul–Sep 2026',anfragen:'sofort!',beauftragen:'Jun W4',status:'now'},
+{g:'Putzfirma – Pilot 1.OG',arbeit:'Aug W4 2026',anfragen:'Jun W2',beauftragen:'Jun W4',status:'now'},
+{g:'Malermeister (Fenster Nachbearbeitung)',arbeit:'Nov 2026 oder Frühjahr 2027',anfragen:'erledigt ✓ (kontaktiert)',beauftragen:'Nach Fenstereinbau Okt',status:'soon'},
+{g:'Wimmer Service (Sanitär Küche)',arbeit:'Sep W3 2026',anfragen:'erledigt ✓ (Aufmaß Aug W3)',beauftragen:'Nach Aufmaß Aug W3',status:'soon'},
+{g:'Wimmer Service (Elektriker Küche)',arbeit:'Sep W3 2026',anfragen:'erledigt ✓ (Aufmaß Aug W3)',beauftragen:'Nach Aufmaß Aug W3',status:'soon'},
+// Warten
+{g:'Firma Wanddurchbruch',arbeit:'Nov W1 2026',anfragen:'Nach Denkmalamt-Genehmigung (~Sep)',beauftragen:'Sep W3–4',status:'wait'},
+// Planen
 {g:'Außentreppe vor Haustür',arbeit:'Nov W3 2026',anfragen:'Sep W3',beauftragen:'Okt W3',status:'plan'},
-// Mallorca-Pause
-{g:'HWR Fachfirma (Boden + Wände)',arbeit:'Jan W1 2027',anfragen:'Okt W1 2026',beauftragen:'Nov W1 2026',status:'plan'},
-{g:'Putzfirma – EG Kalkputz',arbeit:'Okt W3 2026',anfragen:'Jul W3',beauftragen:'Aug W3',status:'plan'},
-// Phase 4 nach Rückkehr
-{g:'Bäder – Fachfirma',arbeit:'Apr W1 2027',anfragen:'Nov W1 2026',beauftragen:'Dez W1 2026',status:'plan'},
-{g:'Terrasse – Fachfirma',arbeit:'Apr W1 2027',anfragen:'Nov W1 2026',beauftragen:'Dez W1 2026',status:'plan'},
-{g:'Böden EG+1.OG – Parkettschleifer',arbeit:'Jul W1 2027',anfragen:'Apr W1 2027',beauftragen:'Mai W1 2027',status:'plan'},
-{g:'Putzfirma – 2.OG Kalkputz',arbeit:'Jul W1 2027',anfragen:'Apr W1 2027',beauftragen:'Mai W1 2027',status:'plan'},
+{g:'HWR Fachfirma (Boden + Wände)',arbeit:'Feb W3 2027',anfragen:'Okt W1 2026',beauftragen:'Nov W1 2026',status:'plan'},
+{g:'Putzfirma – EG Kalkputz',arbeit:'Nov W3 2026',anfragen:'Aug W3',beauftragen:'Sep W3',status:'plan'},
+{g:'Bäder – Fachfirma',arbeit:'Mai W3 2027',anfragen:'Nov W1 2026',beauftragen:'Dez W1 2026',status:'plan'},
+{g:'Terrasse – Fachfirma',arbeit:'Mai W3 2027',anfragen:'Nov W1 2026',beauftragen:'Dez W1 2026',status:'plan'},
+{g:'Böden EG+1.OG – Parkettschleifer',arbeit:'Aug W1 2027',anfragen:'Mai W1 2027',beauftragen:'Jun W1 2027',status:'plan'},
+{g:'Putzfirma – 2.OG Kalkputz',arbeit:'Aug W1 2027',anfragen:'Mai W1 2027',beauftragen:'Jun W1 2027',status:'plan'},
 {g:'Marmorboden Flur EG',arbeit:'Sep W1 2027',anfragen:'Jun W1 2027',beauftragen:'Jul W1 2027',status:'plan'},
-// Phase 5
 {g:'Statiker (Riss Nr. 12)',arbeit:'Aug W1 2027',anfragen:'Mai W1 2027',beauftragen:'Jun W1 2027',status:'plan'},
-{g:'Fassade + Anstrich',arbeit:'Aug W1 2027',anfragen:'Mai W1 2027',beauftragen:'Jun W1 2027',status:'plan'},
-{g:'Balkon: Wandputz + Anstrich',arbeit:'Jul W1 2027',anfragen:'Apr W1 2027',beauftragen:'Mai W1 2027',status:'plan'},
+{g:'Fassade + Anstrich',arbeit:'Sep W1 2027',anfragen:'Jun W1 2027',beauftragen:'Jul W1 2027',status:'plan'},
+{g:'Balkon: Wandputz + Anstrich',arbeit:'Aug W1 2027',anfragen:'Apr W1 2027',beauftragen:'Mai W1 2027',status:'plan'},
 {g:'Energieberater',arbeit:'Nov 2027',anfragen:'Aug 2027',beauftragen:'Sep 2027',status:'plan'},
 ];
 
@@ -404,18 +408,13 @@ function renderFremd(){
 function renderDokumente(){
   var h='';
   h+='<div style="background:#fff;border:.5px solid #d3d1c7;border-radius:12px;padding:1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1.25rem">';
-  h+='<div style="width:48px;height:48px;background:#1967D2;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">';
-  h+='<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M7.5 15L4 21h16l-3.5-6H7.5z" fill="white" opacity=".7"/><path d="M12 3L8 9.5h8L12 3z" fill="white"/><path d="M8 9.5L4 16h7.5L15.5 9.5H8z" fill="white" opacity=".5"/></svg>';
-  h+='</div>';
-  h+='<div style="flex:1">';
-  h+='<div style="font-size:15px;font-weight:600;color:#1a1a18;margin-bottom:3px">Google Drive – Projektordner</div>';
-  h+='<div style="font-size:12px;color:#73726c">Alle Belege, Rechnungen, Angebote und Projektdokumente</div>';
-  h+='</div>';
+  h+='<div style="width:48px;height:48px;background:#1967D2;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M7.5 15L4 21h16l-3.5-6H7.5z" fill="white" opacity=".7"/><path d="M12 3L8 9.5h8L12 3z" fill="white"/><path d="M8 9.5L4 16h7.5L15.5 9.5H8z" fill="white" opacity=".5"/></svg></div>';
+  h+='<div style="flex:1"><div style="font-size:15px;font-weight:600;color:#1a1a18;margin-bottom:3px">Google Drive – Projektordner</div><div style="font-size:12px;color:#73726c">Alle Belege, Rechnungen, Angebote und Projektdokumente</div></div>';
   h+='<a href="https://drive.google.com/drive/folders/1HoEg07yVH1EeDkEQim8Hb8Rie9m0wVB3?usp=sharing" target="_blank" style="background:#1967D2;color:#fff;text-decoration:none;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:500;white-space:nowrap">Ordner öffnen →</a>';
   h+='</div>';
   var cats=[
     {icon:'🧾',title:'Rechnungen',desc:'Alle gestellten und erhaltenen Rechnungen chronologisch',examples:['RE202507-0012 · Jul 2025','RE202508-0016 · Aug 2025','RE202510-0019 · Okt 2025','RE202512-0020 · Dez 2025','RE202601-0022/0023 · Jan 2026','RE202602-0024 · Feb 2026','RE202604-0025 · Apr 2026']},
-    {icon:'📋',title:'Angebote',desc:'Angebote von Fachfirmen (Heizung, Fenster, Putz, etc.)',examples:['IDM Wärmepumpe','Fensterfirma','Kellerdecke Dämmung','Dachdecker']},
+    {icon:'📋',title:'Angebote',desc:'Angebote von Fachfirmen',examples:['IDM Wärmepumpe','Fensterfirma','Kellerdecke Dämmung','Dachdecker','Wimmer Service']},
     {icon:'📄',title:'Genehmigungen & Anträge',desc:'Behördliche Dokumente und Förderanträge',examples:['KfW-Zusageschreiben (10.500 €)','BAFA-Antrag Fenster + Kellerdecke','Denkmalamt-Genehmigung energetisch','Denkmalantrag Küche (laufend)']},
     {icon:'🏗️',title:'Projektdokumentation',desc:'Prüfberichte, Pläne, Sachverständigenberichte',examples:['Prüfbericht Sachverständiger (21.03.2024)','Individueller Sanierungsfahrplan (iSFP)','Heizlastberechnung','Grundrisspläne']},
     {icon:'📸',title:'Baudokumentation',desc:'Fotos des Baufortschritts',examples:['Vorher-Aufnahmen','Fortschrittsfotos Treppenhaus','Fortschrittsfotos Zimmer']},
@@ -423,21 +422,14 @@ function renderDokumente(){
   h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">';
   cats.forEach(function(cat){
     h+='<div style="background:#fff;border:.5px solid #d3d1c7;border-radius:10px;padding:.875rem 1rem">';
-    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:.5rem">';
-    h+='<span style="font-size:18px">'+cat.icon+'</span>';
-    h+='<div style="font-size:13px;font-weight:500;color:#1a1a18">'+cat.title+'</div>';
-    h+='</div>';
+    h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:.5rem"><span style="font-size:18px">'+cat.icon+'</span><div style="font-size:13px;font-weight:500;color:#1a1a18">'+cat.title+'</div></div>';
     h+='<div style="font-size:11px;color:#73726c;margin-bottom:.5rem">'+cat.desc+'</div>';
     h+='<div style="border-top:.5px solid #ebe9e3;padding-top:.5rem">';
-    cat.examples.forEach(function(ex){
-      h+='<div style="font-size:10px;color:#a09e98;padding:2px 0">· '+ex+'</div>';
-    });
+    cat.examples.forEach(function(ex){ h+='<div style="font-size:10px;color:#a09e98;padding:2px 0">· '+ex+'</div>'; });
     h+='</div></div>';
   });
   h+='</div>';
-  h+='<div style="margin-top:1rem;background:#ebe9e3;border-radius:8px;padding:.65rem 1rem;font-size:11px;color:#73726c">';
-  h+='<strong style="color:#1a1a18">Tipp:</strong> Neue Rechnungen und Angebote direkt in den Drive-Ordner hochladen – so hat dein Vater immer den aktuellen Stand.';
-  h+='</div>';
+  h+='<div style="margin-top:1rem;background:#ebe9e3;border-radius:8px;padding:.65rem 1rem;font-size:11px;color:#73726c"><strong style="color:#1a1a18">Tipp:</strong> Neue Rechnungen und Angebote direkt in den Drive-Ordner hochladen – so hat dein Vater immer den aktuellen Stand.</div>';
   return h;
 }
 
